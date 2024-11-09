@@ -3,9 +3,6 @@ import 'package:wallet_app/modules/add_tab/add_view.dart';
 import 'package:wallet_app/modules/home_tab/home_view.dart';
 import 'package:wallet_app/modules/notebook_tab/nodebook_view.dart';
 
-// import 'package:my_wallet/modules/add_tab/add_view.dart';
-// import 'package:my_wallet/modules/home_tab/home_view.dart';
-// import 'package:my_wallet/modules/notebook_tab/nodebook_view.dart';
 
 class LayoutView extends StatefulWidget {
   LayoutView({super.key});

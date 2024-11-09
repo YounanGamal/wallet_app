@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-   CustomTextField({
+  CustomTextField({
     super.key,
     required this.hintText,
     required this.fillColor,
@@ -9,7 +9,8 @@ class CustomTextField extends StatelessWidget {
     required this.width,
     required this.cursorColor,
     this.keyboardType,
-    this.onSaved,
+    this.onFieldSubmitted,
+    this.controller
   });
 
   final String hintText;
@@ -18,8 +19,8 @@ class CustomTextField extends StatelessWidget {
   final double height;
   final double width;
   final TextInputType? keyboardType;
-  FormFieldSetter<String>? onSaved;
-
+  Function(String)?  onFieldSubmitted;
+  TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -32,7 +33,8 @@ class CustomTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
         ),
         child: TextFormField(
-          onChanged: onSaved,
+          onFieldSubmitted:onFieldSubmitted,
+          controller: controller,
           cursorColor: cursorColor,
           textAlign: TextAlign.center,
           keyboardType: keyboardType,
