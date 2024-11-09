@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:wallet_app/cubit/balance_cubit.dart';
 import 'package:wallet_app/cubit/balance_state.dart';
 import 'package:wallet_app/modules/notebook_tab/nodebook_view.dart';
@@ -19,6 +21,7 @@ class _AddViewState extends State<AddView> {
   double deposit = 0;
   double withdrawal = 0;
   TextEditingController? titleController = TextEditingController();
+  TextEditingController? moneyController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +85,7 @@ class _AddViewState extends State<AddView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'إبداع',
+                            'إيداع',
                             style: TextStyle(
                               fontSize: 24,
                               color: isDeposit
@@ -119,6 +122,7 @@ class _AddViewState extends State<AddView> {
                 ),
                 const SizedBox(height: 20),
                 CustomTextField(
+                  controller: moneyController,
                   fillColor: Colors.black,
                   height: 55,
                   width: 150,
@@ -132,12 +136,28 @@ class _AddViewState extends State<AddView> {
                       notes.add(NoteBook(
                           title: titleController!.text,
                           money: double.parse(money)));
+                      moneyController?.clear();
+                      titleController?.clear();
+                      showTopSnackBar(
+                        Overlay.of(context),
+                        const CustomSnackBar.success(
+                          message: "Transaction record added successfully",
+                        ),
+                      );
                     } else {
                       cubit.operation(
                           isDeposit: isDeposit, money: double.parse(money));
                       notes.add(NoteBook(
                           title: titleController!.text,
                           money: double.parse(money)));
+                      moneyController?.clear();
+                      titleController?.clear();
+                      showTopSnackBar(
+                        Overlay.of(context),
+                        const CustomSnackBar.success(
+                          message: "Transaction record added successfully",
+                        ),
+                      );
                     }
                   },
                 ),
@@ -156,122 +176,4 @@ class _AddViewState extends State<AddView> {
       },
     );
   }
-
-// Widget build(BuildContext context) {
-//   return Stack(
-//     children: [
-//       Expanded(
-//         child: Row(
-//           children: [
-//             Expanded(
-//               child: InkWell(
-//                 onTap: () {
-//                   setState(() {
-//                     isDeposit = false;
-//                   });
-//                 },
-//                 child: Container(
-//                   height: MediaQuery.of(context).size.height,
-//                   color: isDeposit
-//                       ? Colors.grey.shade300
-//                       : const Color(0xFF4A6FF0),
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     children: [
-//                       Text(
-//                         'صرف',
-//                         style: TextStyle(
-//                           fontSize: 24,
-//                           color:
-//                               isDeposit ? Colors.black : Colors.grey.shade300,
-//                         ),
-//                       ),
-//                       const SizedBox(height: 20),
-//                       Icon(
-//                         Icons.remove,
-//                         size: 60,
-//                         color: isDeposit
-//                             ? const Color(0xFF4A6FF0)
-//                             : Colors.grey.shade300,
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             ),
-//             Expanded(
-//               child: InkWell(
-//                 onTap: () {
-//                   setState(() {
-//                     isDeposit = true;
-//                     // print(isDeposit);
-//                   });
-//                 },
-//                 child: Container(
-//                   height: MediaQuery.of(context).size.height,
-//                   color: isDeposit
-//                       ? const Color(0xFF4A6FF0)
-//                       : Colors.grey.shade300,
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     children: [
-//                       Text(
-//                         'إبداع',
-//                         style: TextStyle(
-//                           fontSize: 24,
-//                           color:
-//                               isDeposit ? Colors.grey.shade300 : Colors.black,
-//                         ),
-//                       ),
-//                       const SizedBox(height: 20),
-//                       Icon(
-//                         Icons.add,
-//                         size: 60,
-//                         color: isDeposit
-//                             ? Colors.grey.shade300
-//                             : const Color(0xFF4A6FF0),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//       Column(
-//         mainAxisAlignment: MainAxisAlignment.start,
-//         children: [
-//           const SizedBox(
-//             height: 80,
-//           ),
-//            CustomTextField(
-//             hintText: 'عنوان',
-//             fillColor: Colors.white,
-//             height: 55,
-//             width: 220,
-//             cursorColor: Colors.black,
-//           ),
-//           const SizedBox(
-//             height: 20,
-//           ),
-//           CustomTextField(
-//             fillColor: Colors.black,
-//             height: 55,
-//             width: 150,
-//             cursorColor: Colors.white,
-//             keyboardType: TextInputType.number,
-//             hintText: '0000',
-//             onFieldSubmitted:(p0) {
-//               print(p0);
-//             },
-//           ),
-//           const SizedBox(
-//             height: 20,
-//           ),
-//         ],
-//       )
-//     ],
-//   );
-// }
 }

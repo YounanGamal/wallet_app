@@ -16,7 +16,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      // animationDuration: Duration(seconds: 4),
+      animationDuration: Duration(seconds: 4),
       splash: Column(
         children: [
           Center(
